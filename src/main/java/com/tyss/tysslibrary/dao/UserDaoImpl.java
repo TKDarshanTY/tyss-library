@@ -9,6 +9,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import com.tyss.tysslibrary.dto.Book;
+import com.tyss.tysslibrary.dto.User;
 
 public class UserDaoImpl implements UserDao {
 	@PersistenceUnit
@@ -48,5 +49,21 @@ public class UserDaoImpl implements UserDao {
 		return list;
 
 	
+	}
+
+	@Override
+	public boolean registerUser(User user) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		try {
+			transaction.begin();
+			manager.persist(user);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

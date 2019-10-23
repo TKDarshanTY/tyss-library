@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.tyss.tysslibrary.dao.UserDao;
 import com.tyss.tysslibrary.dto.Book;
+import com.tyss.tysslibrary.dto.User;
 @Service
 public class UserServiceImpl implements UserService{
 	@Autowired
@@ -27,6 +28,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<Book> getAllBook() {
 		return dao.getAllBook();
+	}
+
+	@Override
+	public boolean registerUser(User user) {
+		return dao.registerUser(user);
 	}
 
 }

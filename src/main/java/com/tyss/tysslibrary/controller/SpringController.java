@@ -43,7 +43,7 @@ public class SpringController {
 	public String searchBook() {
 		return "searchbook";
 	}
-	@PostMapping("/search")
+	@PostMapping("/searchbook")
 	public String searchBook1( String bName,Model map) {
 		List<Book> list=service.searchBook(bName);
 		map.addAttribute("list", list);
