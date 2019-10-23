@@ -11,5 +11,7 @@ public interface BookDao {
 
 	public List<Book> getAllBook();
 
-	public Book searchBook(String bName);
+	public List<Book> searchBook(String bName);
+	
+	public boolean updateBook(Book book);
 }

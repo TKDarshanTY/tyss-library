@@ -1,5 +1,7 @@
 package com.tyss.tysslibrary.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,5 +32,21 @@ public class SpringController {
 			return "home";
 		}
 		return "error";
+	}
+	@GetMapping("/getall")
+	public String getAllBook(ModelMap model) {
+		List<Book> list=service.getAllBook();
+		model.addAttribute("list", list);
+		return "getallbook";
+	}
+	@GetMapping("/search")
+	public String searchBook() {
+		return "searchbook";
+	}
+	@PostMapping("/search")
+	public String searchBook1( String bName,Model map) {
+		List<Book> list=service.searchBook(bName);
+		map.addAttribute("list", list);
+		return "searchdata";
 	}
 }

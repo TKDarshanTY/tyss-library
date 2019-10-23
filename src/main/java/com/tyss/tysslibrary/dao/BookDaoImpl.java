@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,6 @@ public class BookDaoImpl implements BookDao {
 	public boolean addBook(Book book) {
 		EntityManager manager = factory.createEntityManager();
 		EntityTransaction transaction = manager.getTransaction();
-		System.out.println(book.getbAuthor());
 		try {
 			transaction.begin();
 			manager.persist(book);
@@ -35,17 +35,60 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public boolean removeBook(int bId) {
-		return false;
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		Book book=manager.find(Book.class,bId);
+		if(book==null) {
+			return false;
+		}
+		transaction.begin();
+		manager.remove(book);
+		transaction.commit();
+		return true;
 	}
 
 	@Override
 	public List<Book> getAllBook() {
-		return null;
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		
+		String get="from Book";
+		Query query=manager.createQuery(get);
+		List<Book> list=query.getResultList();
+		if(list==null) {
+			return null;
+		}
+		return list;
 	}
 
 	@Override
-	public Book searchBook(String bName) {
-		return null;
+	public List<Book> searchBook(String bName) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		String get="from Book where bName like '%=:bName%'";
+		Query query=manager.createQuery(get);
+		query.setParameter("bName", bName);
+		List<Book> list=query.getResultList();
+		if(list==null) {
+			return null;
+		}
+		return list;
+	}
+
+	@Override
+	public boolean updateBook(Book book) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		Book book1=manager.find(Book.class,book.getbId());
+		if(book1==null) {
+			return false;
+		}
+		transaction.begin();
+		book1.setbAuthor(book.getbAuthor());
+		book1.setbName(book.getbName());
+		book1.setbCategory(book.getbCategory());
+		transaction.commit();
+		return true;
 	}
 
 }

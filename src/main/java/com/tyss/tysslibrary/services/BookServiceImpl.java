@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.tyss.tysslibrary.dao.BookDao;
 import com.tyss.tysslibrary.dto.Book;
+
 @Service
 public class BookServiceImpl implements BookService {
 	@Autowired
@@ -14,7 +15,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public boolean addBook(Book book) {
-		
+
 		return dao.addBook(book);
 	}
 
@@ -31,9 +32,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book searchBook(String bName) {
+	public List<Book> searchBook(String bName) {
 		// TODO Auto-generated method stub
 		return dao.searchBook(bName);
 	}
 
+	@Override
+	public boolean updateBook(Book book) {
+
+		return dao.updateBook(book);
+	}
 }
